@@ -1,0 +1,55 @@
+
+ASSESSMENTS
+A group of volunteers contributed their time and work during the assessment
+phase, labeling hundreds of hosts each.
+
+    * Thiago Alves
+    * Luca Becchetti
+    * Klaus Berberich
+    * Paolo Boldi
+    * Ilaria Bordino
+    * David Buffoni
+    * Guido Caldarelli
+    * Armando Carvalho
+    * Carlos Castillo
+    * James Caverlee
+    * Carlo Crociani
+    * Na Dai
+    * Brian D. Davison
+    * Matteo Di Gioia
+    * Pascal Filoche
+    * Antonio Gulli
+    * Zoltan Gyongyi
+    * Marcin Hryculak
+    * Thomas Lavergne
+    * Nelly Litvak
+    * Mario Paniccia
+    * Josiane Xavier Parreira
+    * XiaoGuang Qi
+    * Simon Racz
+    * Steve Ross Webb
+    * Maddalena Selis
+    * Fabrizio Silvestri
+    * Elena Smirnova
+    * Marcin Sydow
+    * Sylvie Tricot
+    * Tanguy Urvoy
+    * Yana Volkovich
+    * Jian Wang
+    * Baoning Wu
+    * Bin Zhou
+
+ORGANIZING COMMITTEE
+
+    * Tony Abou-Assaleh
+    * Carlos Castillo (coordination)
+    * Kumar Chellapilla (updated guidelines)
+    * Brian Davison
+    * Ludovic Denoyer (assessment interface)
+    * Debora Donato (volunteer coordination)
+    * Dennis Fetterly
+    * Pascal Filoche
+    * Zoltan Gyongyi
+    * Alexandros Ntoulas (assessment interface)
+    * Tanguy Urvoy
+
