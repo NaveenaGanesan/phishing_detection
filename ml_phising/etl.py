@@ -53,6 +53,13 @@ def is_domain_ip(url = 'url'):
             return 0
     df['is_domain_ip'] = df[url].apply(domain_is_ip)
 
+def has_suspicious_keywords(url = 'url'):
+    def suspicious_keywords():
+        sus_keywords = ['login', 'verify', 'account', 'update', 'secure']
+        
+        ...
+    df['total_suspicious_keywords'] = df[url].apply(suspicious_keywords)
+
 def extract_tld(url = 'url'):
     def tld_extractor(string):
         tld = np.nan
