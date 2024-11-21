@@ -20,7 +20,7 @@ def label_encoding(label):
 
     df['label_encoded'] = df[label].apply(
         lambda x: 1 if any(str(term) in x for term in phishing_terms) else 0
-    )    
+    )
     # label_encoder = LabelEncoder()
     # df['label_encoded'] = label_encoder.fit_transform(df[label])
     df = df.rename(columns={label: "label"})
@@ -84,7 +84,7 @@ def has_suspicious_keywords(url = 'url'):
     def suspicious_keywords(string):
         matches = sus_keywords_pattern.findall(string)
         return len(matches)
-    
+
     df['total_suspicious_keywords'] = df[url].apply(suspicious_keywords)
 
 def extract_tld(url = 'url'):
@@ -126,7 +126,7 @@ dataset = {
     "1": {"filename": "kaggle_balanced_urls.csv", "label_encode_on": "label", "feature_extraction_on": "url", "excess_columns": True},
     "2": {"filename": "kaggle_malicious_phish.csv", "label_encode_on": "type", "feature_extraction_on": "url"},
     "3": {"filename": "PhiUSIIL_Phishing_URL_Dataset_uci_2024.csv", "label_encode_on": "label", "feature_extraction_on": "url", "excess_columns": True},
-    "4": {"filename": "all_url.csv", "label_encode_on": "type", "feature_extraction_on": "url"},    
+    "4": {"filename": "all_url.csv", "label_encode_on": "type", "feature_extraction_on": "url"},
 }
 
 
@@ -134,7 +134,7 @@ def preprocess():
     global df
     if "excess_columns" in dataset_details: df = df[['url', 'label']]
     # Preprocessing functions
-    if args.preprocess:
+    if args.preprocess or args.store_preprocess:
         # Labelling nominal / ordinal variables (label_encoded_on: numeric(Mostly 0, 1))
         label_encoding(dataset_details["label_encode_on"])
 
@@ -184,7 +184,7 @@ args = parser.parse_args()
 raw_data_filename = None
 
 
-def read_data(dataset_details):    
+def read_data(dataset_details):
     global df, raw_data_filename
     # Filename
     raw_data_filename = dataset_details["filename"]

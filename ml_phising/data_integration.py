@@ -5,12 +5,12 @@ import argparse
 def read_all_preprocess(dataset_obj: dict) -> list:
     arr = []
     for obj in dataset_obj.values():
-        try:            
+        try:
             file = os.path.join(obj["file_path"], obj["filename"])
             df = pd.read_csv(file)
             arr.append(df)
         except Exception as e:
-            print(f"Error on {obj["filename"]}: {e}")
+            print(f"Error on {obj['filename']}: {e}")
     return arr
 
 def merge_all_preprocess(preprocess_list: list) -> pd.DataFrame:
@@ -19,7 +19,7 @@ def merge_all_preprocess(preprocess_list: list) -> pd.DataFrame:
         return merged_df
     except Exception as e:
         print("Error on merging all files:", e)
-    return None        
+    return None
 
 def final_preprocess(df: pd.DataFrame) -> pd.DataFrame:
     # df = df.fillna(method='ffill')
@@ -30,16 +30,19 @@ def final_preprocess(df: pd.DataFrame) -> pd.DataFrame:
 
     # Drop any other unnecessary columns
     cols_to_keep = ["url","label","label_encoded","url_length","num_special_chars","normal_url_length","normal_num_special_chars","num_subdomains","is_https","is_domain_ip","total_suspicious_keywords","tld","url_entropy"]
-    cols_to_drop = [col for col in df.columns if col not in cols_to_keep]    
+    cols_to_drop = [col for col in df.columns if col not in cols_to_keep]
     df = df.drop(columns=cols_to_drop)
 
-    # print("All uniques values in label column")    
+    # print("All uniques values in label column")
 
 
     return df
 
-def store_df(df: pd.DataFrame) -> None:
-    df.to_csv('../data/integrated/integrated_phishing_data.csv', index=False)
+def store_df(df: pd.DataFrame, directory = '../data/integrated/', filename = 'integrated_phishing_data.csv') -> None:
+    os.makedirs(directory, exist_ok=True)
+    final_path = os.path.join(directory, filename)
+    df.to_csv(final_path, index=False)
+
 
 if __name__ == "__main__":
 
@@ -49,7 +52,7 @@ if __name__ == "__main__":
 
 
     preprocess_list = []
-    raw_file_path = "../data/preprocess/"    
+    raw_file_path = "../data/preprocess/"
 
     dataset_details_obj = {
         "1": {"filename": "all_url_preprocess.csv", "file_path": raw_file_path},
