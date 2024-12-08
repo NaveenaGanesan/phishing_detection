@@ -107,7 +107,28 @@ class DataDistribution:
         print(act_freq)        
 
     def url_length_analysis(self):
-        ...
+        # legitimate_lengths = self.df[self.df["label_encoded"] == 0]["url_length"]
+        # phishing_lengths = self.df[self.df["label_encoded"] == 1]["url_length"]
+        threshold = self.df['url_length'].quantile(0.99999)
+        filtered_df = self.df[self.df['url_length'] <= threshold]
+
+        all_data  = pd.DataFrame({'url_length': filtered_df['url_length'], 'Category': "All"})
+        legitimate_data  = pd.DataFrame({'url_length': filtered_df[filtered_df["label_encoded"] == 0]["url_length"], 'Category': "Legitimate"})
+        phishing_data  = pd.DataFrame({'url_length': filtered_df[filtered_df["label_encoded"] == 1]["url_length"], 'Category': "Phishing"})
+
+        combined_data = pd.concat([all_data, legitimate_data, phishing_data], ignore_index=True)
+
+        sns.boxplot(data=combined_data, x='Category', y='url_length', palette='Set2')
+
+        plt.title('Comparison of URL Lengths: All, Legitimate, and Phishing', fontsize=14)
+        plt.xlabel('Category', fontsize=12)
+        plt.ylabel('URL Length', fontsize=12)
+        
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        plt.xticks(fontsize=10)
+        plt.yticks(fontsize=10)
+        
+        plt.show()        
 
     def printHead(self) -> None:
         print(self.df.head())
@@ -119,5 +140,6 @@ if __name__ == "__main__":
     # dd.descriptive_stats()
     # dd.correlation_analysis()
     # dd.feature_analysis()
-    dd.tld_analysis()
+    # dd.tld_analysis()
+    dd.url_length_analysis()
     # dd.printHead()
