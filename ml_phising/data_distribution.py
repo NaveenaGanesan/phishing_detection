@@ -6,6 +6,7 @@ from sklearn.feature_selection import chi2
 from sklearn.preprocessing import MinMaxScaler
 import seaborn as sns
 import matplotlib.pyplot as plt
+import streamlit as st
 
 class DataDistribution:
 
@@ -17,49 +18,54 @@ class DataDistribution:
 
     def total_data_distribution(self):
         rows, cols = self.df.shape
-        print(f"Total Data Distribution:: rows: {rows}, cols: {cols}")
+        st.write(f"Total Data Distribution:: rows: {rows}, cols: {cols}")
 
-    def target_class_distribution(self, target_label: str):
+    def target_class_distribution(self, target_label: str, display_plot: bool = False):
         phishing_count = self.df[target_label].sum()
         legitimate_count = self.df.shape[0] - phishing_count
-        print(f"Target Class Distribution:: Legitimate: {legitimate_count}, Phishing: {phishing_count}")
-        class_counts = self.df[target_label].value_counts()
+        rows, cols = self.df.shape
+        st.write(f"### Total Data Distribution:: rows: {rows}, cols: {cols}")
+        st.write(f"### Target Class Distribution:: Legitimate: {legitimate_count}, Phishing: {phishing_count}")
+        # class_counts = self.df[target_label].value_counts()
         class_percentages = self.df[target_label].value_counts(normalize=True) * 100
 
         labels = ["legitimate", "phishing"]
         plt.pie(class_percentages, labels=labels, autopct='%.2f%%')
-        plt.show()
-        print(f"Class Percentage: {class_percentages}")
+        plt.title("Class Distribution")        
+        # print(f"Class Percentage: {class_percentages}")
+        st.pyplot(plt)
 
     def descriptive_stats(self):
-        mean = lambda col: self.df[col].mean()
-        median = lambda col: self.df[col].median()
-        mode = lambda col: self.df[col].mode()
-        std = lambda col: self.df[col].std()
-        range = lambda col: self.df[col].max() - self.df[col].min()
+        # mean = lambda col: self.df[col].mean()
+        # median = lambda col: self.df[col].median()
+        # mode = lambda col: self.df[col].mode()
+        # std = lambda col: self.df[col].std()
+        # range = lambda col: self.df[col].max() - self.df[col].min()
 
-        desc = [mean, median, mode, std, range]
+        # desc = [mean, median, mode, std, range]
+        # cols = ['url_length', 'num_special_chars', 'url_entropy']
+
+        # table = [["column", "mean", "median", "mode", "std", "range"]]
+        # for col in cols:
+        #     stats = [f"{col}"]
+        #     for func in desc:
+        #         stats.append(func(col))
+        #     table.append(stats)
+
+        # print(tabulate(table, headers="firstrow", tablefmt="grid"))
         cols = ['url_length', 'num_special_chars', 'url_entropy']
+        stats_df = self.df[cols].describe()
+        st.write("### Descriptive Statistics")
+        st.dataframe(stats_df)
 
-        table = [["column", "mean", "median", "mode", "std", "range"]]
-        for col in cols:
-            stats = [f"{col}"]
-            for func in desc:
-                stats.append(func(col))
-            table.append(stats)
-
-        print(tabulate(table, headers="firstrow", tablefmt="grid"))
-
-    def correlation_analysis(self):
+    def correlation_analysis(self, display_plot: bool = False):
         features = self.df.select_dtypes(include=[np.number]).columns.tolist()
         features = [f for f in features if f not in ['label', 'label_encoded']]
-        correlation_matrix = self.df[features].corr()
-        # print(correlation_matrix)
+        correlation_matrix = self.df[features].corr()        
         plt.figure(figsize=(8, 6))  # Adjust figure size
         sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
-
         plt.title("Correlation Matrix Heatmap")
-        # plt.show()
+        st.pyplot(plt)        
 
     def feature_analysis(self, features = None):
         """
@@ -74,14 +80,12 @@ class DataDistribution:
         normal_num_special_chars (χ² ≈ 10.7, p ≈ 0.001)
         url_entropy (χ² ≈ 8.0, p ≈ 0.005)
         num_special_chars (χ² ≈ 4.9, p ≈ 0.027)        
-        """
-
-        self.df = self.df.dropna()
+        """        
 
         if not features:
             features = self.df.select_dtypes(include=[np.number]).columns.tolist()
             features = [f for f in features if f not in ['label', 'label_encoded']]
-
+        self.df = self.df.dropna()
         X = self.df[features]
         y = self.df['label_encoded']
 
@@ -93,23 +97,24 @@ class DataDistribution:
             'Feature': features,
             'Chi-squared Score': chi_scores,
             'P-value': p_value
-        })
+        }).sort_values('Chi-squared Score', ascending=False)
 
-        print("Important Features...\n")
-        print(feature_scores.sort_values('Chi-squared Score', ascending=False))
+        st.write("Important Features(Chi-Square Test)\n")
+        st.dataframe(feature_scores)
 
-    def tld_analysis(self):
+    def tld_analysis(self, display_plot: bool = False):
         act_freq = self.df['tld'].value_counts()
-        freq = act_freq[:5]
-        height = np.arange(5)
+        freq = act_freq[:5]        
         plt.bar(freq.index, freq.values)
-        plt.show()         
-        print(act_freq)        
+        plt.title("Top 5 TLD Frequencies")
+        plt.xlabel("TLD")
+        plt.ylabel("Frequency")
+        st.pyplot(plt)
 
-    def url_length_analysis(self):
+    def url_length_analysis(self, display_plot: bool = False):
         # legitimate_lengths = self.df[self.df["label_encoded"] == 0]["url_length"]
         # phishing_lengths = self.df[self.df["label_encoded"] == 1]["url_length"]
-        threshold = self.df['url_length'].quantile(0.99999)
+        threshold = self.df['url_length'].quantile(0.999)
         filtered_df = self.df[self.df['url_length'] <= threshold]
 
         all_data  = pd.DataFrame({'url_length': filtered_df['url_length'], 'Category': "All"})
@@ -124,22 +129,49 @@ class DataDistribution:
         plt.xlabel('Category', fontsize=12)
         plt.ylabel('URL Length', fontsize=12)
         
-        plt.grid(axis='y', linestyle='--', alpha=0.7)
-        plt.xticks(fontsize=10)
-        plt.yticks(fontsize=10)
+        # plt.grid(axis='y', linestyle='--', alpha=0.7)
+        # plt.xticks(fontsize=10)
+        # plt.yticks(fontsize=10)
         
-        plt.show()        
+        # if display_plot: plt.show()        
+        st.pyplot(plt)
 
     def printHead(self) -> None:
         print(self.df.head())
 
 if __name__ == "__main__":
-    dd = DataDistribution()
-    # dd.total_data_distribution()
-    # dd.target_class_distribution('label_encoded')
-    # dd.descriptive_stats()
-    # dd.correlation_analysis()
-    # dd.feature_analysis()
-    # dd.tld_analysis()
-    dd.url_length_analysis()
-    # dd.printHead()
+    st.title("Phishing Data Dashboard")
+    data_distribution = DataDistribution()
+    st.sidebar.title("Navigation")
+    options = [        
+        "Target Class Distribution",
+        "Descriptive Statistics",
+        "Correlation Analysis",
+        "Feature Analysis",
+        "TLD Analysis",
+        "URL Length Analysis"
+    ]
+    choice = st.sidebar.selectbox("Select a function to display", options)
+
+    # Render the selected function
+    # if choice == "Total Data Distribution":
+    #     data_distribution.total_data_distribution()
+
+    if choice == "Target Class Distribution":
+        target_label = st.sidebar.text_input("Enter Target Label (default: 'label_encoded')", "label_encoded")
+        data_distribution.target_class_distribution(target_label)
+
+    elif choice == "Descriptive Statistics":
+        data_distribution.descriptive_stats()
+
+    elif choice == "Correlation Analysis":
+        data_distribution.correlation_analysis()
+
+    elif choice == "Feature Analysis":
+        data_distribution.feature_analysis()
+
+    elif choice == "TLD Analysis":
+        data_distribution.tld_analysis()
+
+    elif choice == "URL Length Analysis":
+        data_distribution.url_length_analysis()
