@@ -11,5 +11,3 @@ Data Mining Project
 - Machine Learning Models (After reducing dimensions): ml_url2.py
 - Machine Learning Plots scripts (Streamlit app): ml_visual.py
 - Model output: model_results.csv
-
-## Web Scraper (scraper)
