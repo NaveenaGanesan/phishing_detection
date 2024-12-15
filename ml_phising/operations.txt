@@ -1,5 +1,0 @@
-Dataset: kaggle_balanced_urls.csv
-1. Encoding label
-2. Feature extraction
-    a. Adding lengths of url
-    b. Special Character Count Extraction

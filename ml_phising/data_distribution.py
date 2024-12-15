@@ -25,7 +25,7 @@ class DataDistribution:
         legitimate_count = self.df.shape[0] - phishing_count
         rows, cols = self.df.shape
         st.write(f"### Total Data Distribution:: rows: {rows}, cols: {cols}")
-        st.write(f"### Target Class Distribution:: Legitimate: {legitimate_count}, Phishing: {phishing_count}")
+        st.write(f"##### Target Class Distribution:: Legitimate: {legitimate_count}, Phishing: {phishing_count}")
         # class_counts = self.df[target_label].value_counts()
         class_percentages = self.df[target_label].value_counts(normalize=True) * 100
 
@@ -86,7 +86,7 @@ class DataDistribution:
             features = self.df.select_dtypes(include=[np.number]).columns.tolist()
             features = [f for f in features if f not in ['label', 'label_encoded']]
         self.df = self.df.dropna()
-        X = self.df[features]
+        X = self.df[features] 
         y = self.df['label_encoded']
 
         scaler = MinMaxScaler()
