@@ -1,0 +1,172 @@
+model_type,parameters,accuracy,classification_report,y_test,y_pred,y_prob
+Logistic Regression,{},0.7292151331859951,"              precision    recall  f1-score   support
+
+           0       0.84      0.73      0.78    181267
+           1       0.58      0.72      0.65     93837
+
+    accuracy                           0.73    275104
+   macro avg       0.71      0.73      0.71    275104
+weighted avg       0.75      0.73      0.73    275104
+",,,
+Logistic Regression,"{'max_iter': 1000, 'class_weight': 'balanced'}",0.7292151331859951,"              precision    recall  f1-score   support
+
+           0       0.84      0.73      0.78    181267
+           1       0.58      0.72      0.65     93837
+
+    accuracy                           0.73    275104
+   macro avg       0.71      0.73      0.71    275104
+weighted avg       0.75      0.73      0.73    275104
+",,,
+Random Forest,"{'n_estimators': 100, 'random_state': 42, 'class_weight': 'balanced'}",0.8720265790391997,"              precision    recall  f1-score   support
+
+           0       0.90      0.90      0.90    181267
+           1       0.81      0.82      0.81     93837
+
+    accuracy                           0.87    275104
+   macro avg       0.86      0.86      0.86    275104
+weighted avg       0.87      0.87      0.87    275104
+",,,
+Decision Tree,"{'max_depth': 10, 'random_state': 42, 'class_weight': 'balanced'}",0.8820118936838433,"              precision    recall  f1-score   support
+
+           0       0.87      0.96      0.91    181267
+           1       0.90      0.73      0.81     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.89      0.85      0.86    275104
+weighted avg       0.88      0.88      0.88    275104
+",,,
+SVM,"{'kernel': 'linear', 'class_weight': 'balanced', 'random_state': 42}",0.7270559497499127,"              precision    recall  f1-score   support
+
+           0       0.83      0.73      0.78    181267
+           1       0.58      0.72      0.64     93837
+
+    accuracy                           0.73    275104
+   macro avg       0.71      0.73      0.71    275104
+weighted avg       0.75      0.73      0.73    275104
+",,,
+Gradient Boosting,"{'n_estimators': 100, 'learning_rate': 0.1, 'max_depth': 3, 'random_state': 42}",0.8609035128533209,"              precision    recall  f1-score   support
+
+           0       0.86      0.94      0.90    181267
+           1       0.85      0.72      0.78     93837
+
+    accuracy                           0.86    275104
+   macro avg       0.86      0.83      0.84    275104
+weighted avg       0.86      0.86      0.86    275104
+",,,
+Gradient Boosting,"{'n_estimators': 200, 'learning_rate': 0.05, 'max_depth': 5, 'random_state': 42}",0.8824735372804466,"              precision    recall  f1-score   support
+
+           0       0.88      0.95      0.91    181267
+           1       0.88      0.76      0.81     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.88      0.85      0.86    275104
+weighted avg       0.88      0.88      0.88    275104
+",,,
+Gradient Boosting subsample,"{'n_estimators': 200, 'learning_rate': 0.05, 'max_depth': 5, 'random_state': 42, 'subsample': 0.9}",0.8822263580318715,"              precision    recall  f1-score   support
+
+           0       0.88      0.95      0.91    181267
+           1       0.88      0.75      0.81     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.88      0.85      0.86    275104
+weighted avg       0.88      0.88      0.88    275104
+",,,
+XGBoost,"{'n_estimators': 200, 'learning_rate': 0.05, 'max_depth': 5, 'random_state': 42}",0.8838366581365593,"              precision    recall  f1-score   support
+
+           0       0.88      0.96      0.92    181267
+           1       0.90      0.74      0.81     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.89      0.85      0.86    275104
+weighted avg       0.89      0.88      0.88    275104
+",,,
+XGBoost Hypertuned GridSearchCV,"{'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': 7, 'n_estimators': 300, 'subsample': 0.8}",0.8883222345004071,"              precision    recall  f1-score   support
+
+           0       0.89      0.94      0.92    181267
+           1       0.88      0.78      0.83     93837
+
+    accuracy                           0.89    275104
+   macro avg       0.89      0.86      0.87    275104
+weighted avg       0.89      0.89      0.89    275104
+",,,
+LightGBM Hypertuned GridSearchCV,"{'objective': 'binary', 'metric': 'binary_error', 'boosting_type': 'gbdt', 'num_leaves': 31, 'learning_rate': 0.1, 'feature_fraction': 1.0, 'max_depth': 7, 'subsample': 0.8, 'verbose': -1}",0.8698637606141677,"              precision    recall  f1-score   support
+
+           0       0.85      0.98      0.91    181267
+           1       0.94      0.66      0.78     93837
+
+    accuracy                           0.87    275104
+   macro avg       0.89      0.82      0.84    275104
+weighted avg       0.88      0.87      0.86    275104
+",,,
+LightGBM Hypertuned GridSearchCV,"{'objective': 'binary', 'metric': 'binary_error', 'boosting_type': 'gbdt', 'num_leaves': 31, 'learning_rate': 0.1, 'feature_fraction': 1.0, 'max_depth': 7, 'subsample': 0.8, 'verbose': -1, 'scale_pos_weight': 1.0}",0.3410964580667674,"              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00    181267
+           1       0.34      1.00      0.51     93837
+
+    accuracy                           0.34    275104
+   macro avg       0.17      0.50      0.25    275104
+weighted avg       0.12      0.34      0.17    275104
+",,,
+KNN Neighbors,{'n_neighbors': 5},0.8832259799930208,"              precision    recall  f1-score   support
+
+           0       0.90      0.93      0.91    181267
+           1       0.85      0.80      0.82     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.87      0.86      0.87    275104
+weighted avg       0.88      0.88      0.88    275104
+",,,
+Logistic Regression Opt,"{'max_iter': 1000, 'class_weight': 'balanced'}",0.7379790915435617,"              precision    recall  f1-score   support
+
+           0       0.82      0.77      0.80    181267
+           1       0.60      0.67      0.64     93837
+
+    accuracy                           0.74    275104
+   macro avg       0.71      0.72      0.72    275104
+weighted avg       0.75      0.74      0.74    275104
+",,,
+Random Forest Opt,"{'n_estimators': 100, 'random_state': 42, 'class_weight': 'balanced'}",0.8724264278236594,"              precision    recall  f1-score   support
+
+           0       0.90      0.90      0.90    181267
+           1       0.81      0.82      0.81     93837
+
+    accuracy                           0.87    275104
+   macro avg       0.86      0.86      0.86    275104
+weighted avg       0.87      0.87      0.87    275104
+",,,
+Decision Tree Opt,"{'max_depth': 10, 'random_state': 42, 'class_weight': 'balanced'}",0.8777444166569733,"              precision    recall  f1-score   support
+
+           0       0.87      0.96      0.91    181267
+           1       0.89      0.73      0.80     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.88      0.84      0.86    275104
+weighted avg       0.88      0.88      0.87    275104
+",,,
+Gradient Boosting Opt,"{'n_estimators': 200, 'learning_rate': 0.05, 'max_depth': 5}",0.8828152262417123,"              precision    recall  f1-score   support
+
+           0       0.88      0.95      0.91    181267
+           1       0.89      0.75      0.81     93837
+
+    accuracy                           0.88    275104
+   macro avg       0.88      0.85      0.86    275104
+weighted avg       0.88      0.88      0.88    275104
+",,,
+XGBoost HyperparameterTuned Opt,"{'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': 7, 'n_estimators': 300, 'subsample': 0.8}",0.8880278003954868,"              precision    recall  f1-score   support
+
+           0       0.89      0.94      0.92    181267
+           1       0.88      0.78      0.83     93837
+
+    accuracy                           0.89    275104
+   macro avg       0.89      0.86      0.87    275104
+weighted avg       0.89      0.89      0.89    275104
+",,,
+LightGBM HyperparameterTuned Opt,"{'colsample_bytree': 1.0, 'learning_rate': 0.1, 'max_depth': 7, 'num_leaves': 70, 'subsample': 0.8}",0.8874134872629987,"              precision    recall  f1-score   support
+
+           0       0.89      0.95      0.92    181267
+           1       0.89      0.77      0.82     93837
+
+    accuracy                           0.89    275104
+   macro avg       0.89      0.86      0.87    275104
+weighted avg       0.89      0.89      0.89    275104
+",,,
